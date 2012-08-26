@@ -1,6 +1,7 @@
 Revision history for Pod-Weaver-Section-Template
 
 {{$NEXT}}
+      - Fix tests to work with Pod::Elemental::PerlMunger 0.093332
 
 0.02  2012-05-31
       Improvements by new co-maintainer Christopher J. Madsen:

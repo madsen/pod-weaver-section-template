@@ -22,8 +22,20 @@ my $zilla = Dist::Zilla::Tester->from_config({
 });
 $zilla->build;
 
+sub get_foo
+{
+  my $content = file('lib', 'Foo', shift)->slurp;
+
+  # Standardize whitespace:
+  $content =~ s/\s*__END__\s+=pod\s+/\n\n__END__\n\n=pod\n\n/;
+  $content =~ s/^=cut\s*\z/=cut\n/m;
+
+  $content;
+} # end get_foo
+
+#---------------------------------------------------------------------
 chdir $zilla->tempdir->subdir('build');
-is(file('lib', 'Foo', 'Bar.pm')->slurp, <<'PM', "got the right Bar.pm file contents");
+is(get_foo('Bar.pm'), <<'PM', "got the right Bar.pm file contents");
 package Foo::Bar;
 # ABSTRACT: turns trinkets into baubles
 
@@ -33,6 +45,7 @@ sub bar {
 1;
 
 __END__
+
 =pod
 
 =head1 BUGS
@@ -72,10 +85,10 @@ L<http://search.cpan.org/dist/Foo-Bar>
 =back
 
 =cut
-
 PM
 
-is(file('lib', 'Foo', 'Baz.pm')->slurp, <<'PM', "got the right Baz.pm file contents");
+#---------------------------------------------------------------------
+is(get_foo('Baz.pm'), <<'PM', "got the right Baz.pm file contents");
 package Foo::Baz;
 
 sub baz {
@@ -84,6 +97,7 @@ sub baz {
 1;
 
 __END__
+
 =pod
 
 =head1 SUPPORT
@@ -115,7 +129,6 @@ L<http://search.cpan.org/dist/Foo-Bar>
 =back
 
 =cut
-
 PM
 
 done_testing;
