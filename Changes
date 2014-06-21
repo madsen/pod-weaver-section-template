@@ -1,6 +1,9 @@
 Revision history for Pod-Weaver-Section-Template
 
 {{$NEXT}}
+
+0.04  2014-06-21
+      Release by Christopher J. Madsen
       - Fix tests to avoid "cannot remove path" warning
 
 0.03  2012-08-26
