@@ -12,6 +12,7 @@ use Test::More;
 
 use Dist::Zilla::Tester;
 use FindBin;
+use File::pushd;
 use Path::Class;
 use Pod::Elemental;
 use Pod::Weaver;
@@ -34,7 +35,7 @@ sub get_foo
 } # end get_foo
 
 #---------------------------------------------------------------------
-chdir $zilla->tempdir->subdir('build');
+my $pushed = pushd($zilla->tempdir->subdir('build'));
 is(get_foo('Bar.pm'), <<'PM', "got the right Bar.pm file contents");
 package Foo::Bar;
 # ABSTRACT: turns trinkets into baubles
